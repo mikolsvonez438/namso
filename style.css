@@ -1,0 +1,56 @@
+.card {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.error {
+    color: red;
+}
+
+#cardsOutput {
+    min-height: 100px;
+}
+
+@media (max-width: 767px) {
+    .card {
+        width: 90%;
+    }
+}
+
+#cardsOutput p {
+    margin-bottom: -10px;
+    display: flex;
+    align-items: center;
+}
+
+
+.generated-number {
+    flex-grow: 1;
+}
+
+.copy-icon {
+    cursor: pointer;
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+}
