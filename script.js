@@ -71,6 +71,18 @@ let cardData = [
         bin: '53635000072xxxxx|12|30|xxx',
         link: null
     },
+     {
+        site: '2D SITE (BUG BIN) (MC)',
+        country: 'RANDOM',
+        bin: '5425504502xxxxxx|xx|xx|xxx',
+        link: null
+    },
+     {
+        site: 'YOUTUBE US',
+        country: 'US',
+        bin: '49987100012xxxxx|xx|xx|xxx',
+        link: null
+    },
 
 ];
 document.addEventListener('DOMContentLoaded', function () {
