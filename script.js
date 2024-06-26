@@ -53,6 +53,18 @@ let cardData = [
         bin: '55769200551xxxxx|07|27|xxx',
         link: null
     },
+     {
+        site: 'PRIME VIDEO (CANADA)',
+        country: 'CANADA',
+        bin: '454033189113xxxx|01|27|xxx',
+        link: null
+    },
+     {
+        site: 'YOUTUBE PH',
+        country: 'OWN',
+        bin: '546775820853xxxx|06|27|xxx',
+        link: null
+    },
 
 ];
 document.addEventListener('DOMContentLoaded', function () {
