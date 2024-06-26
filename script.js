@@ -65,6 +65,12 @@ let cardData = [
         bin: '546775820853xxxx|06|27|xxx',
         link: null
     },
+     {
+        site: 'TIDAL / PLEX / STAN.AU',
+        country: 'US',
+        bin: '53635000072xxxxx|12|30|xxx',
+        link: null
+    },
 
 ];
 document.addEventListener('DOMContentLoaded', function () {
