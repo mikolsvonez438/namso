@@ -1,3 +1,22 @@
+
+let cardData = [
+    {
+        site: 'STRIPE TRIAL',
+        country: 'US',
+        bin: '515462002018xxxx|09|2027|xxx'
+    },
+    {
+        site: 'YOUTUBE',
+        country: 'ALGERIA',
+        bin: '546775977863xxxx|02|2029|xxx'
+    },
+    {
+        site: 'MS 365 | COPILOT',
+        country: 'US',
+        bin: '515462003923|09|2027|xxx'
+    },
+
+];
 document.addEventListener('DOMContentLoaded', function () {
     var monthDropdown = document.getElementById('monthDropdown');
     var yearDropdown = document.getElementById('yearDropdown');
@@ -86,8 +105,52 @@ document.addEventListener('DOMContentLoaded', function () {
             cardsOutput.appendChild(newP);
         }
     });
-});
 
+    var searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInit();
+    }
+});
+function searchInit() {
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+        filterCards();
+    });
+}
+
+function filterCards() {
+    var input, filter, filteredData;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+
+    filteredData = cardData.filter(card =>
+        card.site.toUpperCase().includes(filter) ||
+        card.country.toUpperCase().includes(filter) ||
+        card.bin.toUpperCase().includes(filter)
+    );
+
+    displayCards(filteredData);
+}
+
+function displayCards(cards) {
+    const cardsContainer = document.getElementById('cardsContainer');
+    cardsContainer.innerHTML = '';  // Clear the container
+
+    cards.forEach(card => {
+        cardsContainer.innerHTML += `
+        <div class="card mx-auto">
+            <div class="card-header text-center">
+                ${card.site} - ${card.country}
+            </div>
+            <div class="card-body text-center">
+                ${card.bin}
+                <button onclick="copyToClipboard('${card.bin}')" class="btn" aria-label="Copy BIN">
+                    <i class="fas fa-copy copy-icon"></i>
+                </button>
+            </div>
+        </div>
+    `;
+    });
+}
 function randomNumber() {
     return Math.floor(Math.random() * 10).toString();
 }
@@ -120,6 +183,7 @@ function showToast(checkDigit) {
     toast.style.display = 'block';
     toast.style.opacity = 1;
     toast.style.bottom = '40px';
+    toast.style.zIndex = 9999;
     toast.textContent = "Copied to clipboard! " + checkDigit;
 
     setTimeout(() => {
@@ -133,41 +197,16 @@ function showToast(checkDigit) {
 
 
 $(document).ready(function () {
+
     $('#binListModal').on('show.bs.modal', function (event) {
-        const cardData = [
-            {
-                site: 'STRIPE TRIAL',
-                country: 'US',
-                bin: '515462002018xxxx|09|2027|xxx'
-            },
-            {
-                site: 'YOUTUBE',
-                country: 'ALGERIA',
-                bin: '546775977863xxxx|02|2029|xxx'
-            },
-            {
-                site: 'MS 365 | COPILOT',
-                country: 'US',
-                bin: '515462003923|09|2027|xxx'
-            }
-        ];
-        var cardsContainer = document.getElementById('cardsContainer');
-
-        cardsContainer.innerHTML = '';
-
-        cardData.forEach(card => {
-            cardsContainer.innerHTML += `
-                <div class="card mx-auto">
-                    <div class="card-header text-center">
-                        ${card.site} - ${card.country}
-                    </div>
-                    <div class="card-body text-center">${card.bin}<button onclick="copyToClipboard('${card.bin}')" class="btn" aria-label="Copy BIN">
-                    <i class="fas fa-copy"></i>
-                </button></div>
-                </div>
-            `;
-        });
+        displayCards(cardData);
     });
+
+
+
+    /* ---------------------------- populate binlist ---------------------------- */
+
+
 
 });
 
