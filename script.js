@@ -35,6 +35,24 @@ let cardData = [
         bin: '555270011808|07|2027|xxx',
         link: null
     },
+    {
+        site: 'PEACOCK',
+        country: 'US',
+        bin: '443547050x4xxxxx|xx|xx|xxx',
+        link: null
+    },
+    {
+        site: 'CANVA',
+        country: 'BHUTAN / THIMPU',
+        bin: '546775560834xxxx|03|32|xxx',
+        link: null
+    },
+    {
+        site: 'CRUNCHYROLL',
+        country: 'INDO ZIP 00000',
+        bin: '55769200551xxxxx|07|27|xxx',
+        link: null
+    },
 
 ];
 document.addEventListener('DOMContentLoaded', function () {
