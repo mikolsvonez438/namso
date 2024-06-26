@@ -83,6 +83,12 @@ let cardData = [
         bin: '49987100012xxxxx|xx|xx|xxx',
         link: null
     },
+    {
+        site: 'FUBO.TV',
+        country: 'US',
+        bin: '55750100000xxxxx|xx|xx|xxx',
+        link: null
+    },
 
 ];
 document.addEventListener('DOMContentLoaded', function () {
