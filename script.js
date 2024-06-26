@@ -15,6 +15,11 @@ let cardData = [
         country: 'US',
         bin: '515462003923|09|2027|xxx'
     },
+    {
+        site: 'TIDAL',
+        country: 'US',
+        bin: '4815830040|03|2029|xxx'
+    },
 
 ];
 document.addEventListener('DOMContentLoaded', function () {
