@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let months = month ? month.toString().slice(-2).padStart(2, '0') : randomMonth();
 
             number += generateCheckDigit(number) + '|' + months + '|' + years + '|' + Math.floor(100 + Math.random() * 900);
-
+            let checkDigit = number.split('|')[0];
             const newP = document.createElement("p");
             newP.textContent = number;
             newP.className = 'generated-number';
@@ -80,8 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
             newP.appendChild(copyIcon);
 
             copyIcon.addEventListener('click', function () {
-                navigator.clipboard.writeText(newP.textContent).then(() => showToast())
-                // alert("Copied: " + newP.textContent);
+                navigator.clipboard.writeText(checkDigit).then(() => showToast(checkDigit))
             });
 
             cardsOutput.appendChild(newP);
@@ -116,11 +115,12 @@ function randomYear() {
     return year.toString().substr(2, 2);
 }
 
-function showToast() {
+function showToast(checkDigit) {
     const toast = document.getElementById('toast');
     toast.style.display = 'block';
     toast.style.opacity = 1;
     toast.style.bottom = '40px';
+    toast.textContent = "Copied to clipboard! " + checkDigit;
 
     setTimeout(() => {
         toast.style.opacity = 0;
@@ -129,4 +129,53 @@ function showToast() {
             toast.style.display = 'none';
         }, 500);
     }, 2000);
+}
+
+
+$(document).ready(function () {
+    $('#binListModal').on('show.bs.modal', function (event) {
+        const cardData = [
+            {
+                site: 'STRIPE TRIAL',
+                country: 'US',
+                bin: '515462002018xxxx|09|2027|xxx'
+            },
+            {
+                site: 'YOUTUBE',
+                country: 'ALGERIA',
+                bin: '546775977863xxxx|02|2029|xxx'
+            },
+            {
+                site: 'MS 365 | COPILOT',
+                country: 'US',
+                bin: '515462003923|09|2027|xxx'
+            }
+        ];
+        var cardsContainer = document.getElementById('cardsContainer');
+
+        cardsContainer.innerHTML = '';
+
+        cardData.forEach(card => {
+            cardsContainer.innerHTML += `
+                <div class="card mx-auto">
+                    <div class="card-header text-center">
+                        ${card.site} - ${card.country}
+                    </div>
+                    <div class="card-body text-center">${card.bin}<button onclick="copyToClipboard('${card.bin}')" class="btn" aria-label="Copy BIN">
+                    <i class="fas fa-copy"></i>
+                </button></div>
+                </div>
+            `;
+        });
+    });
+
+});
+
+function copyToClipboard(bin) {
+    let copyBin = bin.split('|')[0];
+    navigator.clipboard.writeText(copyBin).then(() => {
+        showToast(copyBin);
+    }).catch(err => {
+        console.error('Error in copying text: ', err);
+    });
 }
