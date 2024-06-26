@@ -29,6 +29,12 @@ let cardData = [
         bin: '413098170337xxxx|06|2026|xxx',
         link: 'https://redeem.services.apple/roktappletv-mx'
     },
+      {
+        site: 'CHESS.COM',
+        country: 'US / OWN',
+        bin: '555270011808|07|2027|xxx',
+        link: null
+    },
 
 ];
 document.addEventListener('DOMContentLoaded', function () {
