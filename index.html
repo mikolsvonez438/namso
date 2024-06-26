@@ -63,9 +63,10 @@
             <div class="card-body">
                 <div class="row justify-content-center"> <!-- Center the form row -->
                     <div class="col-sm-10 col-md-8 col-lg-6"> <!-- Adjusted for a smaller width -->
-                        <div class="mb-3">
-                            <label for="prefixBin" class="form-label">Enter BIN</label>
-                            <input type="text" class="form-control" id="prefixBin" placeholder="123456" autocomplete="off">
+                        <div class="mb-3 form-floating">
+                            <input type="text" class="form-control" id="prefixBin" placeholder="123456"
+                                autocomplete="off">
+                            <label for="prefixBin">Enter BIN</label>
                             <div id="error" class="error"></div>
                         </div>
                         <div class="mb-3">
@@ -117,7 +118,19 @@
                 </div>
                 <div class="modal-body">
                     <!-- BIN -->
-                    <div class="container-sm" id="cardsContainer">
+                    <div class="row g-3 align-items-center" id="searchContainer">
+                        <div class="col-auto">
+                            <label for="searchInput" class="col-form-label">Search: </label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" id="searchInput" class="form-control" onkeyup="filterCards()"
+                                aria-describedby="passwordHelpInline" autocomplete="off">
+                        </div>
+
+                    </div>
+
+                    <div class="container-smg" id="cardsContainer">
+
                     </div>
 
                 </div>
