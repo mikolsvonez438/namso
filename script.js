@@ -3,12 +3,14 @@ let cardData = [
     {
         site: 'STRIPE TRIAL',
         country: 'US',
-        bin: '515462002018xxxx|09|2027|xxx'
+        bin: '515462002018xxxx|09|2027|xxx',
+        link: null
     },
     {
         site: 'YOUTUBE',
         country: 'ALGERIA',
-        bin: '546775977863xxxx|02|2029|xxx'
+        bin: '546775977863xxxx|02|2029|xxx',
+        link: null
     },
     {
         site: 'MS 365 | COPILOT',
@@ -18,7 +20,14 @@ let cardData = [
     {
         site: 'TIDAL',
         country: 'US',
-        bin: '4815830040|03|2029|xxx'
+        bin: '4815830040|03|2029|xxx',
+        link: null
+    },
+    {
+        site: 'APPLE TV | APPLE MUSIC',
+        country: 'MEXICO',
+        bin: '413098170337xxxx|06|2026|xxx',
+        link: 'https://redeem.services.apple/roktappletv-mx'
     },
 
 ];
@@ -144,7 +153,8 @@ function displayCards(cards) {
         cardsContainer.innerHTML += `
         <div class="card mx-auto">
             <div class="card-header text-center">
-                ${card.site} - ${card.country}
+                ${card.site} - ${card.country} ${card.link ? `-> <a style="text-decoration:none" href="${card.link}">USEFUL LINK</a>` : ''
+            }
             </div>
             <div class="card-body text-center">
                 ${card.bin}
