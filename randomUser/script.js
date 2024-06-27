@@ -71,4 +71,15 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    var searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInit();
+    }
+});
+
+$(document).ready(function () {
+    $('#binListModal').on('show.bs.modal', function (event) {
+        displayCards(cardData);
+    });
 });
