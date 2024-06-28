@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var bankNameInput = document.getElementById('bankName');
 
-            if (!bankNameInput.textContent || bankNameInput.textContent == 'Unknown' ) {
+            if (!bankNameInput.textContent || bankNameInput.textContent == 'Unknown' || bankNameInput.textContent != statBankName) {
                 bankNameInput.textContent = statBankName;
             }
             cardsOutput.appendChild(newP);
