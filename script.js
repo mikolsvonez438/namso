@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let months = month ? month.toString().slice(-2).padStart(2, '0') : randomMonth();
 
             number += generateCheckDigit(number) + '|' + months + '|' + years + '|' + Math.floor(100 + Math.random() * 900);
+            isLive(number);
             let checkDigit = number.split('|')[0];
             const newP = document.createElement("p");
             newP.textContent = number;
@@ -93,6 +94,12 @@ document.addEventListener('DOMContentLoaded', function () {
         searchInit();
     }
 });
+
+function isLive(kardo){
+   axios.get(`https://xchecker.cc/api.php?cc=${kardo}`).then((res) => {
+        console.log(res.data)
+    })
+}
 function searchInit() {
     document.getElementById('searchInput').addEventListener('keyup', function () {
         filterCards();
