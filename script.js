@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // button
     var generateBtn = document.getElementById("generateBtn");
-    generateBtn.addEventListener('click', function () {
+    generateBtn.addEventListener('click', async function () {
         let prefixBin = document.getElementById('prefixBin').value;
         let month = document.getElementById('monthDropdown').value;
         let year = document.getElementById('yearDropdown').value;
@@ -69,7 +69,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let months = month ? month.toString().slice(-2).padStart(2, '0') : randomMonth();
 
             number += generateCheckDigit(number) + '|' + months + '|' + years + '|' + Math.floor(100 + Math.random() * 900);
-            isLive(number);
+            let stat = await isLive(number);
+            let statBankName = stat.bankNAme;
             let checkDigit = number.split('|')[0];
             const newP = document.createElement("p");
             newP.textContent = number;
@@ -79,12 +80,24 @@ document.addEventListener('DOMContentLoaded', function () {
             copyIcon.className = "fas fa-copy copy-icon";
             copyIcon.style.cursor = 'pointer';
 
+
+            const statusIcon = document.createElement("span");
+            statusIcon.className = "status-icon";
+            statusIcon.style.paddingLeft = '5px';
+            statusIcon.textContent = stat.status !== "Dead" || stat.status !== "Unknown" ? '✔️' : '❌';
+
             newP.appendChild(copyIcon);
+            newP.appendChild(statusIcon);
 
             copyIcon.addEventListener('click', function () {
                 navigator.clipboard.writeText(checkDigit).then(() => showToast(checkDigit))
             });
 
+            var bankNameInput = document.getElementById('bankName');
+
+            if (!bankNameInput.textContent || bankNameInput.textContent == 'Unknown' ) {
+                bankNameInput.textContent = statBankName;
+            }
             cardsOutput.appendChild(newP);
         }
     });
@@ -95,9 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-function isLive(kardo){
-   axios.get(`https://cc-fordward.onrender.com/check?cc=${kardo}`).then((res) => {
-        console.log(res.data)
+function isLive(kardo) {
+    return axios.get(`https://cc-fordward.onrender.com/check?cc=${kardo}`).then((res) => {
+        return { bankNAme: res.data.bankName, status: res.data.status };
     })
 }
 function searchInit() {
