@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const statusIcon = document.createElement("span");
             statusIcon.className = "status-icon";
             statusIcon.style.paddingLeft = '5px';
-            statusIcon.textContent = stat.status !== "Dead" && stat.status !== "Unknown" ? '✔️' : '❌';
+            statusIcon.textContent = stat.status == "Dead" && stat.status == "Unknown" ? '❌' : '✔️';
 
             newP.appendChild(copyIcon);
             newP.appendChild(statusIcon);
