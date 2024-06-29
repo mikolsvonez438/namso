@@ -37,11 +37,14 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         console.error("Dropdown elements not found");
     }
-
     // button
     var generateBtn = document.getElementById("generateBtn");
     generateBtn.addEventListener('click', async function () {
         let prefixBin = document.getElementById('prefixBin').value;
+        let checkLive = document.getElementById('checkLive');
+        let stat = undefined
+        let statBankName = undefined
+        // console.log('checkLive', checkLive.checked)
         let month = document.getElementById('monthDropdown').value;
         let year = document.getElementById('yearDropdown').value;
         const cardQuantity = 10;
@@ -69,8 +72,11 @@ document.addEventListener('DOMContentLoaded', function () {
             let months = month ? month.toString().slice(-2).padStart(2, '0') : randomMonth();
 
             number += generateCheckDigit(number) + '|' + months + '|' + years + '|' + Math.floor(100 + Math.random() * 900);
-            let stat = await isLive(number);
-            let statBankName = stat.bankNAme;
+            if (checkLive.checked) {
+                stat = await isLive(number);
+                statBankName = stat.bankNAme;
+            }
+
             let checkDigit = number.split('|')[0];
             const newP = document.createElement("p");
             newP.textContent = number;
@@ -79,25 +85,28 @@ document.addEventListener('DOMContentLoaded', function () {
             const copyIcon = document.createElement("i");
             copyIcon.className = "fas fa-copy copy-icon";
             copyIcon.style.cursor = 'pointer';
-
-
-            const statusIcon = document.createElement("span");
-            statusIcon.className = "status-icon";
-            statusIcon.style.paddingLeft = '5px';
-            statusIcon.textContent = stat.status == "Dead" || stat.status == "Unknown" ? '❌' : '✔️';
-
             newP.appendChild(copyIcon);
-            newP.appendChild(statusIcon);
+            if (checkLive.checked) {
+                const statusIcon = document.createElement("span");
+                statusIcon.className = "status-icon";
+                statusIcon.style.paddingLeft = '5px';
+                statusIcon.textContent = stat.status == "Dead" || stat.status == "Unknown" ? '❌' : '✔️';
+                newP.appendChild(statusIcon);
+            }
+
+
 
             copyIcon.addEventListener('click', function () {
                 navigator.clipboard.writeText(checkDigit).then(() => showToast(checkDigit))
             });
+            if (checkLive.checked) {
+                var bankNameInput = document.getElementById('bankName');
 
-            var bankNameInput = document.getElementById('bankName');
-
-            if (!bankNameInput.textContent || bankNameInput.textContent == 'Unknown' || bankNameInput.textContent != statBankName) {
-                bankNameInput.textContent = statBankName;
+                if (!bankNameInput.textContent || bankNameInput.textContent == 'Unknown' || bankNameInput.textContent != statBankName) {
+                    bankNameInput.textContent = statBankName;
+                }
             }
+
             cardsOutput.appendChild(newP);
         }
     });
