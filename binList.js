@@ -88,7 +88,12 @@ let cardData = [
         bin: '55750100000xxxxx|xx|xx|xxx',
         link: null
     },
-
+ {
+        site: 'MULTI FUNCTIONAL',
+        country: 'US',
+        bin: '55750100000xxxxx|xx|xxxx|xxx',
+        link: null
+    },
 ];
 
 
