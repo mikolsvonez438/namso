@@ -5,6 +5,12 @@ let cardData = [
         bin: '515462002018xxxx|09|2027|xxx',
         link: null
     },
+     {
+        site: 'CANVA / TRY ON OTHER SITE',
+        country: 'BHUTAN OR RND',
+        bin: '41546444051xxxxx|xx|xxxx|xxx',
+        link: null
+    },
     {
         site: 'YOUTUBE',
         country: 'ALGERIA',
