@@ -122,6 +122,17 @@ function isLive(kardo) {
         return { bankNAme: res.data.bankName, status: res.data.status };
     })
 }
+function checkBinList(Binii) {
+    return axios.get(`https://cc-fordward.onrender.com/checkcc?binValue=${Binii}`).then((res) => {
+        return {
+            bankName: res.data.bank.name,
+            type: res.data.type,
+            country: res.data.country.name,
+            scheme: res.data.scheme,
+            category: res.data.category
+        };
+    });
+}
 function searchInit() {
     document.getElementById('searchInput').addEventListener('keyup', function () {
         filterCards();
@@ -216,12 +227,71 @@ $(document).ready(function () {
         displayCards(cardData);
     });
 
+    $('#modalPasswordGenerator').on('shown.bs.modal', function (event) {
+        var passwordLengthInput = document.getElementById('passwordLength');
+        var includeSpecialCharsCheckbox = document.getElementById('includeSpecialChars');
+        var generatedPasswordInput = document.getElementById('generatedPassword');
+        var passwordLengthValue = document.getElementById('passwordLengthValue');
+        var generatePasswordBtn = document.getElementById('generatePasswordBtn');
+
+        function generatePassword() {
+            var passwordLength = passwordLengthInput.value;
+            var includeSpecialChars = includeSpecialCharsCheckbox.checked;
+            var charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            if (includeSpecialChars) {
+                charset += '!@#$%^&*()_+~`|}{[]\:;?><,./-=';
+            }
+            var password = '';
+            for (var i = 0; i < passwordLength; i++) {
+                var randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
+            }
+            generatedPasswordInput.value = password;
+        }
+
+        generatePassword();
+
+        passwordLengthInput.addEventListener('input', function () {
+            passwordLengthValue.textContent = this.value;
+            generatePassword();
+        });
+
+        generatePasswordBtn.addEventListener('click', function () {
+            generatePassword();
+        })
+        includeSpecialCharsCheckbox.addEventListener('change', function () {
+            generatePassword();
+        });
+    });
+
 
 
     /* ---------------------------- populate binlist ---------------------------- */
 
 
+    /* ----------------------------------- BIN LOOK UP ----------------------------------- */
+    $('#binLookUpModal').on('shown.bs.modal', function (event) {
+        document.getElementById('Binni').addEventListener('input', function () {
+            const resultElement = document.getElementById('result');
+            if (this.value.length == 6) {
+                checkBinList(this.value)
+                    .then((res) => {
+                        console.log('result', res);
 
+                        resultElement.innerHTML = `
+                        <p>Bank Name: ${res.bankName}</p>
+                        <p>Type: ${res.type} | ${res.category} | ${res.scheme}</p>
+                        <p>Country: ${res.country}</p>
+                    `;
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                resultElement.innerHTML = '';
+            }
+        });
+    });
 });
 
 function copyToClipboard(bin) {
