@@ -5,22 +5,16 @@ let cardData = [
         bin: '515462002018xxxx|09|2027|xxx',
         link: null
     },
-      {
-        site: 'Curiositystream ',
+    {
+        site: 'Curiositystream - US',
         country: 'US',
         bin: '515462004578|10|2026|xxx',
-        link: null
-    },
-     {
-        site: 'CANVA / TRY ON OTHER SITE',
-        country: 'BHUTAN OR RND',
-        bin: '41546444051xxxxx|xx|xxxx|xxx',
         link: null
     },
     {
         site: 'YOUTUBE',
         country: 'ALGERIA',
-        bin: '546775977863xxxx|02|2029|xxx',
+        bin: '536350000728xxxx|12|2026|xxx',
         link: null
     },
     {
@@ -52,12 +46,12 @@ let cardData = [
         bin: '443547050x4xxxxx|xx|xx|xxx',
         link: null
     },
-    {
-        site: 'CANVA',
-        country: 'BHUTAN / THIMPU',
-        bin: '546775560834xxxx|03|32|xxx',
-        link: null
-    },
+    // {
+    //     site: 'CANVA',
+    //     country: 'BHUTAN / THIMPU',
+    //     bin: '546775560834xxxx|03|32|xxx',
+    //     link: null
+    // },
     {
         site: 'CRUNCHYROLL',
         country: 'INDO ZIP 00000',
@@ -100,12 +94,7 @@ let cardData = [
         bin: '55750100000xxxxx|xx|xx|xxx',
         link: null
     },
- {
-        site: 'MULTI FUNCTIONAL',
-        country: 'US',
-        bin: '55750100000xxxxx|xx|xxxx|xxx',
-        link: null
-    },
+
 ];
 
 
