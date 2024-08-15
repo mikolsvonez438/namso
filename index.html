@@ -37,11 +37,37 @@
                                 Home
                             </a>
                         </li>
-                        <li>
-                            <a href="./randomUser/index.html" class="nav-link text-white">
-                                <i class="fa-solid fa-address-card mb-1"></i>
-                                Random User
+                        <!-- Dropdown for Tools -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                TOOLS
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <!-- Random User link -->
+                                <li><a href="./randomUser/index.html" class="nav-link text-white">
+                                        <i class="fa-solid fa-address-card mb-1"></i>
+                                        Random User
+                                    </a></li>
+                                <!-- Modal Password link -->
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#modalPasswordGenerator"
+                                        class="nav-link text-white">
+                                        <i class="fa-solid fa-circle-info mb-1"></i>
+                                        Password Generator
+                                    </a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#binLookUpModal"
+                                        class="nav-link text-white">
+                                        <i class="fa-solid fa-circle-info mb-1"></i>
+                                        BinLook up
+                                    </a></li>
+                            </ul>
                         </li>
                         <li>
                             <a href="#" data-bs-toggle="modal" data-bs-target="#myModal" class="nav-link text-white">
@@ -66,7 +92,7 @@
     <div class="container">
         <div class="card mx-auto w-60"> <!-- Updated classes here -->
             <div class="card-header text-center">
-               
+
                 <div class="form-check form-switch">
                     CREDIT CARD GENERATOR
                     <input class="form-check-input" type="checkbox" role="switch" id="checkLive">
@@ -118,6 +144,56 @@
                     This is for educational purpose only.
 
                     Made by <a href="https://phcorner.net/members/localhost-8080.282102/">Vonez</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal password generator -->
+
+    <div class="modal fade" id="modalPasswordGenerator" tabindex="-1" aria-labelledby="modalPasswordGeneratorLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalSmLabel">PASSWORD RANDOMIZER</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="passwordLength" class="form-label">Password Length:</label>
+                        <input type="range" class="form-range" min="8" max="30" step="1" id="passwordLength" value="12">
+                        <span id="passwordLengthValue">12</span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="includeSpecialChars">
+                            <label class="form-check-label" for="includeSpecialChars">Include Special Characters</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-primary" id="generatePasswordBtn">Generate
+                            Password</button>
+                    </div>
+                    <div class="mb-3">
+                        <label for="generatedPassword" class="form-label">Generated Password:</label>
+                        <input type="text" class="form-control" id="generatedPassword" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BIN LOOK UP -->
+    <div class="modal fade" id="binLookUpModal" tabindex="-1" aria-labelledby="binLookUpModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalSmLabel">BIN LOOKUP</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="Binni" class="form-control" autocomplete="off" />
+                    <div id="result"></div>
                 </div>
             </div>
         </div>
