@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     // button
     var generateBtn = document.getElementById("generateBtn");
+
     generateBtn.addEventListener('click', async function () {
         let prefixBin = document.getElementById('prefixBin').value;
         let checkLive = document.getElementById('checkLive');
@@ -62,16 +63,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        const randomDigitsCount = 15 - prefixBin.length;
-
+        const isAmex = prefixBin.startsWith('34') || prefixBin.startsWith('37');
+        const cardLength = isAmex ? 15 : 16;
+        const randomDigitsCount = cardLength - prefixBin.length - 1;
         for (let i = 0; i < cardQuantity; i++) {
 
 
-            let number = prefixBin + Array(randomDigitsCount).fill(0).map(randomNumber).join('');
+            let number = prefixBin;
+
+            if (isAmex) {
+                number += Array(randomDigitsCount).fill(0).map(randomNumber).join('');
+                number += generateCheckDigit(number);
+            } else {
+                number += Array(randomDigitsCount).fill(0).map(randomNumber).join('');
+                number += generateCheckDigit(number);
+            }
+
             let years = year ? year.toString().slice(-2) : randomYear();
             let months = month ? month.toString().slice(-2).padStart(2, '0') : randomMonth();
 
-            number += generateCheckDigit(number) + '|' + months + '|' + years + '|' + Math.floor(100 + Math.random() * 900);
+            number += '|' + months + '|' + years + '|' + (isAmex ? Math.floor(1000 + Math.random() * 9000) : Math.floor(100 + Math.random() * 900));
             if (checkLive.checked) {
                 stat = await isLive(number);
                 statBankName = stat.bankNAme;
@@ -273,16 +284,23 @@ $(document).ready(function () {
     $('#binLookUpModal').on('shown.bs.modal', function (event) {
         document.getElementById('Binni').addEventListener('input', function () {
             const resultElement = document.getElementById('result');
-            if (this.value.length == 6) {
-                checkBinList(this.value)
-                    .then((res) => {
-                        console.log('result', res);
+            const bins = this.value.split('\n').map(bin => bin.trim()).filter(bin => bin.length === 6);
 
-                        resultElement.innerHTML = `
-                        <p>Bank Name: ${res.bankName}</p>
-                        <p>Type: ${res.type} | ${res.category} | ${res.scheme}</p>
-                        <p>Country: ${res.country}</p>
-                    `;
+            if (bins.length > 0) {
+                const promises = bins.map(bin => checkBinList(bin));
+
+                Promise.all(promises)
+                    .then((results) => {
+                        console.log('result', results)
+                        const phBins = results.filter(res => res.country === "PHILIPPINES");
+                        console.log('phbins', phBins)
+                        if (phBins.length > 0) {
+                            // const binList = phBins.filter(res => res.bin);
+                            // console.log('binList', binList)
+                            resultElement.innerHTML = phBins;
+                        } else {
+                            resultElement.innerHTML = 'No Philippine BINs found.';
+                        }
                     })
                     .catch((error) => {
                         console.error('Error:', error);
@@ -291,6 +309,26 @@ $(document).ready(function () {
                 resultElement.innerHTML = '';
             }
         });
+        // document.getElementById('Binni').addEventListener('input', function () {
+        //     const resultElement = document.getElementById('result');
+        //     if (this.value.length == 6) {
+        //         checkBinList(this.value)
+        //             .then((res) => {
+        //                 console.log('result', res);
+
+        //                 resultElement.innerHTML = `
+        //                 <p>Bank Name: ${res.bankName}</p>
+        //                 <p>Type: ${res.type} | ${res.category} | ${res.scheme}</p>
+        //                 <p>Country: ${res.country}</p>
+        //             `;
+        //             })
+        //             .catch((error) => {
+        //                 console.error('Error:', error);
+        //             });
+        //     } else {
+        //         resultElement.innerHTML = '';
+        //     }
+        // });
     });
 });
 
