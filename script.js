@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (searchInput) {
         searchInit();
     }
+
 });
 
 function isLive(kardo) {
@@ -133,21 +134,63 @@ function isLive(kardo) {
         return { bankNAme: res.data.bankName, status: res.data.status };
     })
 }
-function checkBinList(Binii) {
-    return axios.get(`https://cc-fordward.onrender.com/checkcc?binValue=${Binii}`).then((res) => {
-        return {
-            bankName: res.data.bank.name,
-            type: res.data.type,
-            country: res.data.country.name,
-            scheme: res.data.scheme,
-            category: res.data.category
-        };
+async function checkBinList(Binii) {
+    let aray = [];
+    await axios.get(`https://cc-fordward.onrender.com/checkccs`, {
+        params: {
+            bins: Binii
+        }
+    }).then((res) => {
+        res.data.forEach((data) => {
+            aray.push({
+                bin: data.number.iin,
+                bankName: data.bank.name,
+                type: data.type,
+                country: data.country.name,
+                scheme: data.scheme,
+                category: data.category
+            })
+        })
+        // console.log('pak', pak)
+        // return {
+        //     bin: res.data.number.iin,
+        //     bankName: res.data.bank.name,
+        //     type: res.data.type,
+        //     country: res.data.country.name,
+        //     scheme: res.data.scheme,
+        //     category: res.data.category
+        // };
+    });
+    return aray;
+}
+function shortURL(url) {
+    return axios.get(`https://cc-fordward.onrender.com/shortme?url=${url}`).then((res) => {
+        return res.data.shortLink
+
     });
 }
+
 function searchInit() {
     document.getElementById('searchInput').addEventListener('keyup', function () {
         filterCards();
     });
+}
+
+async function shortMyURL(url) {
+    let response = await shortURL(url);
+    console.log('response', response)
+    const urlContainer = document.getElementById('urlContainer');
+    urlContainer.innerHTML = '';
+    urlContainer.innerHTML += `
+    <div class="card ">
+            <div class="card-body text-center">
+                ${response}
+                <button onclick="copyToClipboard('${response}')" class="btn" aria-label="COPY URL">
+                    <i class="fas fa-copy copy-icon"></i>
+                </button>
+            </div>
+        </div>
+    `;
 }
 
 function filterCards() {
@@ -231,12 +274,20 @@ function showToast(checkDigit) {
 
 
 $(document).ready(function () {
-    // axios.get(`https://randomuser.me/api/1.4/?nat=us`).then((res) => {
-    //     console.log(res.data.results[0])
-    // })
     $('#binListModal').on('show.bs.modal', function (event) {
         displayCards(cardData);
     });
+
+    $('#shortModal').on('show.bs.modal', function (event) {
+        document.getElementById('urlText').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                shortMyURL(document.getElementById('urlText').value);
+            }
+        });
+
+    });
+
+
 
     $('#modalPasswordGenerator').on('shown.bs.modal', function (event) {
         var passwordLengthInput = document.getElementById('passwordLength');
@@ -282,53 +333,33 @@ $(document).ready(function () {
 
     /* ----------------------------------- BIN LOOK UP ----------------------------------- */
     $('#binLookUpModal').on('shown.bs.modal', function (event) {
-        document.getElementById('Binni').addEventListener('input', function () {
-            const resultElement = document.getElementById('result');
-            const bins = this.value.split('\n').map(bin => bin.trim()).filter(bin => bin.length === 6);
+        document.getElementById('Binni').addEventListener('input', async function (e) {
+            const textarea = e.target;
+            const lines = textarea.value.split('\n');
+
+            const formattedLines = lines.map(line => {
+                const digits = line.replace(/\D/g, '');
+                return digits.slice(0, 6);
+            });
+
+            textarea.value = formattedLines.join('\n');
+
+            let resultElement = document.getElementById('result');
+
+            const bins = formattedLines.filter(bin => bin.length === 6);
 
             if (bins.length > 0) {
-                const promises = bins.map(bin => checkBinList(bin));
-
-                Promise.all(promises)
-                    .then((results) => {
-                        console.log('result', results)
-                        const phBins = results.filter(res => res.country === "PHILIPPINES");
-                        console.log('phbins', phBins)
-                        if (phBins.length > 0) {
-                            // const binList = phBins.filter(res => res.bin);
-                            // console.log('binList', binList)
-                            resultElement.innerHTML = phBins;
-                        } else {
-                            resultElement.innerHTML = 'No Philippine BINs found.';
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
+                resultElement.innerHTML = '';
+                const checkBinListResult = await checkBinList(bins);
+                console.log('checkBinListResult', checkBinListResult)
+                checkBinListResult.forEach((bin) => {
+                    const binColor = bin.country === "PHILIPPINES" ? "red" : "inherit";
+                    resultElement.innerHTML += `<span style="color: ${binColor}">${bin.bin}</span> => ${bin.country} <br>`;
+                });
             } else {
                 resultElement.innerHTML = '';
             }
         });
-        // document.getElementById('Binni').addEventListener('input', function () {
-        //     const resultElement = document.getElementById('result');
-        //     if (this.value.length == 6) {
-        //         checkBinList(this.value)
-        //             .then((res) => {
-        //                 console.log('result', res);
-
-        //                 resultElement.innerHTML = `
-        //                 <p>Bank Name: ${res.bankName}</p>
-        //                 <p>Type: ${res.type} | ${res.category} | ${res.scheme}</p>
-        //                 <p>Country: ${res.country}</p>
-        //             `;
-        //             })
-        //             .catch((error) => {
-        //                 console.error('Error:', error);
-        //             });
-        //     } else {
-        //         resultElement.innerHTML = '';
-        //     }
-        // });
     });
 });
 
