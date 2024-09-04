@@ -67,6 +67,15 @@
                                         <i class="fa-solid fa-circle-info mb-1"></i>
                                         BinLook up
                                     </a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#shortModal"
+                                        class="nav-link text-white">
+                                        <i class="fa fa-link mb-1"></i>
+                                        Shorten URL
+                                    </a></li>
                             </ul>
                         </li>
                         <li>
@@ -192,7 +201,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" id="Binni" class="form-control" autocomplete="off" />
+                    <textarea id="Binni" class="form-control" autocomplete="off" rows="6"></textarea>
                     <div id="result"></div>
                 </div>
             </div>
@@ -228,6 +237,37 @@
             </div>
         </div>
     </div>
+
+    <!-- SHORT EMAIL -->
+    <div class="modal fade" id="shortModal" tabindex="-1" aria-labelledby="exampleModalSmLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalSmLabel">SHORTEN URL</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row g-3 align-items-center" id="searchContainer">
+                        <div class="col-auto">
+                            <label for="urlText" class="col-form-label">URL: </label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" id="urlText" class="form-control" aria-describedby="passwordHelpInline"
+                                autocomplete="off">
+                        </div>
+                        <div class="col-auto" id="urlContainer">
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- <button type="button" class="btn btn-primary" >
         Launch demo modal
     </button> -->
