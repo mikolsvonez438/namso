@@ -136,7 +136,8 @@ function isLive(kardo) {
 }
 async function checkBinList(Binii) {
     let aray = [];
-    await axios.get(`https://cc-fordward.onrender.com/checkccs`, {
+    // await axios.get(`https://cc-fordward.onrender.com/checkccs`, {
+    await axios.get(`http://us2.bot-hosting.net:20371/checkccs`, {
         params: {
             bins: Binii
         }
