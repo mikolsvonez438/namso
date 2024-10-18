@@ -136,7 +136,7 @@ function isLive(kardo) {
 }
 async function checkBinList(Binii) {
     let aray = [];
-    await axios.get(https://cc-forward.vercel.app/checkccs`, {
+    await axios.get(`https://cc-forward.vercel.app/checkccs`, {
         params: {
             bins: Binii
         }
