@@ -130,13 +130,13 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function isLive(kardo) {
-    return axios.get(`https://cc-fordward.onrender.com/check?cc=${kardo}`).then((res) => {
+    return axios.get(`https://cc-forward.vercel.app/check?cc=${kardo}`).then((res) => {
         return { bankNAme: res.data.bankName, status: res.data.status };
     })
 }
 async function checkBinList(Binii) {
     let aray = [];
-    await axios.get(`https://cc-fordward.onrender.com/checkccs`, {
+    await axios.get(https://cc-forward.vercel.app/checkccs`, {
         params: {
             bins: Binii
         }
@@ -164,7 +164,7 @@ async function checkBinList(Binii) {
     return aray;
 }
 function shortURL(url) {
-    return axios.get(`https://cc-fordward.onrender.com/shortme?url=${url}`).then((res) => {
+    return axios.get(`https://cc-forward.vercel.app/shortme?url=${url}`).then((res) => {
         return res.data.shortLink
 
     });
