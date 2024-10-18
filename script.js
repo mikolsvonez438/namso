@@ -274,21 +274,6 @@ function showToast(checkDigit) {
 
 
 $(document).ready(function () {
-    $('#binListModal').on('show.bs.modal', function (event) {
-        displayCards(cardData);
-    });
-
-    $('#shortModal').on('show.bs.modal', function (event) {
-        document.getElementById('urlText').addEventListener('keydown', function (event) {
-            if (event.key === 'Enter') {
-                shortMyURL(document.getElementById('urlText').value);
-            }
-        });
-
-    });
-
-
-
     $('#modalPasswordGenerator').on('shown.bs.modal', function (event) {
         var passwordLengthInput = document.getElementById('passwordLength');
         var includeSpecialCharsCheckbox = document.getElementById('includeSpecialChars');
